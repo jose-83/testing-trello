@@ -9,9 +9,13 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <run.config.binaries.path>${project.basedir}/src/test/resources/binaries/</run.config.binaries.path>
         <!-- dependency versions -->
         <junit.version>4.12</junit.version>
         <selenium.version>3.5.1</selenium.version>
+        <maven.surefire.version>2.18.1</maven.surefire.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
     </properties>
 
     <dependencies>
@@ -22,11 +26,141 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>ru.stqa.selenium</groupId>
+            <artifactId>webdriver-factory</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+
+                <dependencies>
+                    <!-- force sure fire to use junit instead of testng -->
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>${maven.surefire.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <systemPropertyVariables>
+                        <run.config.browser>chrome</run.config.browser>
+                        <trello.login.page>https://trello.com/login?returnUrl=%2F</trello.login.page>
+                        <trello.admin>jose.mustermann@gmx.de</trello.admin>
+                        <trello.admin.pass>Muster2017</trello.admin.pass>
+
+                        <org.slf4j.simpleLogger.defaultLogLevel>DEBUG</org.slf4j.simpleLogger.defaultLogLevel>
+                        <org.slf4j.simpleLogger.showDateTime>true</org.slf4j.simpleLogger.showDateTime>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>platform-windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.6</source>
+                            <target>1.6</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.surefire.version}</version>
+
+                        <dependencies>
+                            <!-- force sure fire to use junit instead of testng -->
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-junit47</artifactId>
+                                <version>${maven.surefire.version}</version>
+                            </dependency>
+                        </dependencies>
+
+                        <configuration>
+                            <systemPropertyVariables>
+                                <webdriver.chrome.driver>${run.config.binaries.path}chromedriver231.exe
+                                </webdriver.chrome.driver>
+                                <webdriver.gecko.driver>${run.config.binaries.path}geckodriver0180.exe</webdriver.gecko.driver>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>platform-mac</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>1.6</source>
+                            <target>1.6</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven.surefire.version}</version>
+
+                        <dependencies>
+                            <!-- force sure fire to use junit instead of testng -->
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-junit47</artifactId>
+                                <version>${maven.surefire.version}</version>
+                            </dependency>
+                        </dependencies>
+
+                        <configuration>
+                            <systemPropertyVariables>
+                                <webdriver.chrome.driver>${run.config.binaries.path}chromedriver231
+                                </webdriver.chrome.driver>
+                                <webdriver.gecko.driver>${run.config.binaries.path}geckodriver0180</webdriver.gecko.driver>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 
 </project>
