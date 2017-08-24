@@ -3,6 +3,7 @@ package utils.selenium;
 import config.Config;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.stqa.selenium.factory.SingleWebDriverPool;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,6 +62,14 @@ public final class Driver {
         webDriver.get(url);
     }
 
+    public String getTitle() {
+        return webDriver.getTitle();
+    }
+
+    public void refresh(){
+        webDriver.navigate().refresh();
+    }
+
     private void click(By locator) {
         waiter.waitForElementClickable(locator).click();
     }
@@ -72,12 +82,20 @@ public final class Driver {
         click(By.xpath(xpath));
     }
 
+    /**
+     * waitForElement* functions
+     */
+
     public WebElement waitForElementClickableByXPath(String xpath) {
         return waiter.waitForElementClickable(By.xpath(xpath));
     }
 
-    public String getTitle() {
-        return webDriver.getTitle();
+    public WebElement waitForElementClickableById(String id) {
+        return waiter.waitForElementClickable(By.id(id));
+    }
+
+    public WebElement waitForElementShownByXPath(String xpath) {
+        return waiter.waitForElementShown(By.xpath(xpath));
     }
 
     /**
@@ -93,5 +111,55 @@ public final class Driver {
 
     public void writeById(String id, Object value) {
         write(By.id(id), value.toString());
+    }
+
+    /**
+     * find functions
+     */
+
+    private WebElement find(By locator) {
+        return webDriver.findElement(locator);
+    }
+
+    public WebElement findByXpath(String path) {
+        return find(By.xpath(path));
+    }
+
+    /**
+     * findList functions
+     */
+
+    public List<WebElement> findListByXPath(String xpath) {
+        return webDriver.findElements(By.xpath(xpath));
+    }
+
+    /**
+     * isElementDisplayed functions
+     */
+
+    private boolean isElementPresent(By locator) {
+        try {
+            webDriver.findElement(locator);
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isElementDisplayed(By locator) {
+        return isElementPresent(locator) && find(locator).isDisplayed();
+    }
+
+    public boolean isElementDisplayedById(String id) {
+        return isElementDisplayed(By.id(id));
+    }
+
+    public boolean isElementDisplayedByName(String name) {
+        return isElementDisplayed(By.name(name));
+    }
+
+    public boolean isElementDisplayedByXpath(String xpath) {
+        return isElementDisplayed(By.xpath(xpath));
     }
 }
