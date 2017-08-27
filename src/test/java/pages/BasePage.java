@@ -35,13 +35,4 @@ public abstract class BasePage {
     public String getTitle() {
         return driver.getTitle();
     }
-
-    // TODO: consider getting rid of it
-    public void wait(int num){
-        try {
-            Thread.sleep(num);                 //1000 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-    }
 }

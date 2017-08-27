@@ -38,8 +38,4 @@ final class Waiter {
         return fluentWaiter.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    boolean waitForElementHidden(By locator) {
-        return fluentWaiter.until(ExpectedConditions.invisibilityOfElementLocated(locator));
-    }
-
 }

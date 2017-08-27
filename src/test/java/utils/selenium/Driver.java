@@ -113,6 +113,10 @@ public final class Driver {
         write(By.id(id), value.toString());
     }
 
+    public void writeByXpath(String xpath, Object value) {
+        write(By.xpath(xpath), value);
+    }
+
     /**
      * find functions
      */
@@ -149,14 +153,6 @@ public final class Driver {
 
     private boolean isElementDisplayed(By locator) {
         return isElementPresent(locator) && find(locator).isDisplayed();
-    }
-
-    public boolean isElementDisplayedById(String id) {
-        return isElementDisplayed(By.id(id));
-    }
-
-    public boolean isElementDisplayedByName(String name) {
-        return isElementDisplayed(By.name(name));
     }
 
     public boolean isElementDisplayedByXpath(String xpath) {
