@@ -53,7 +53,6 @@
                 <version>${maven.surefire.version}</version>
 
                 <dependencies>
-                    <!-- force sure fire to use junit instead of testng -->
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit47</artifactId>
@@ -99,7 +98,6 @@
                         <version>${maven.surefire.version}</version>
 
                         <dependencies>
-                            <!-- force sure fire to use junit instead of testng -->
                             <dependency>
                                 <groupId>org.apache.maven.surefire</groupId>
                                 <artifactId>surefire-junit47</artifactId>
@@ -141,7 +139,6 @@
                         <version>${maven.surefire.version}</version>
 
                         <dependencies>
-                            <!-- force sure fire to use junit instead of testng -->
                             <dependency>
                                 <groupId>org.apache.maven.surefire</groupId>
                                 <artifactId>surefire-junit47</artifactId>

@@ -9,38 +9,35 @@ import pages.BoardPage;
 import pages.BoardsPage;
 import pages.LoginPage;
 
-public class TestBoardCreation extends TrelloSeleniumTest {
+public class TestListCreation extends TrelloSeleniumTest {
 
     private static final String admin = Config.getAdminName();
     private static final String password = Config.getAdminPass();
     private static final String boardName = "New Board";
+    private static final String listName = "New List";
     private static BoardsPage homepage;
 
     @Before
     public void setUp() {
         LoginPage loginPage = new LoginPage();
         homepage = loginPage.loginAs(admin, password);
+        homepage.createBoard(boardName).goToHomepage();
     }
 
     @After
     public void tearDown() {
+        homepage.goToHomepage();
+        homepage.goToBoard(boardName).deleteBoard();
         homepage.logout();
     }
 
     @Test
-    public void testCreation() {
-        BoardPage boardPage = homepage.createBoard(boardName);
-        Assert.assertEquals("Creation process was not completely successful.", boardName, boardPage.getBoardName());
+    public void testListCreation() {
+        BoardPage boardPage = homepage.goToBoard(boardName);
+        boardPage.addList(listName);
+        boardPage.goToHomepage().goToBoard(boardName);
 
-        boardPage.goToHomepage();
-        Assert.assertTrue("The created board is not available on homepage.", homepage.isBoardAvailable(boardName));
-    }
-
-    @Test
-    public void testDeletion() {
-        BoardPage boardPage = homepage.createBoard(boardName);
-        boardPage.deleteBoard();
-        Assert.assertFalse("The board was not deleted.", homepage.isBoardAvailable(boardName));
+        Assert.assertTrue("The created list is not available on board.", boardPage.isListAvailable(listName));
     }
 
 }
