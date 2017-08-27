@@ -16,6 +16,10 @@
         <maven.surefire.version>2.18.1</maven.surefire.version>
         <slf4j.version>1.7.25</slf4j.version>
         <maven.compiler.plugin.version>3.6.1</maven.compiler.plugin.version>
+        <!-- SonarQube prperties -->
+        <sonar.language>java</sonar.language>
+        <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+        <sonar.junit.reportPaths>${project.build.directory}/surefire-reports</sonar.junit.reportPaths>
     </properties>
 
     <dependencies>
@@ -156,6 +160,16 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <sonar.host.url>http://localhost:9000/</sonar.host.url>
+            </properties>
         </profile>
     </profiles>
 
