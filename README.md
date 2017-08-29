@@ -13,13 +13,18 @@ Java version 1.8, Chrome(version 60.0.3112.101 or greater), and Firefox(version 
 
 ## Running the tests
 
-On the command line, navigate to project root directory and run:
+On the command line, navigate to project root directory and run:(it compiles all testss and runs only smoke test which is here testing the log in functionality)
 ```
 mvn clean install
 ```
 
-It runs all tests on the default browser which is Chrome. For running test on Firefox, you should run:
+For running all other tests, one should test the unit profile which has been defined in the maven pom:
 ```
-mvn clean install -Drun.config.browser=firefox
+mvn test -Punit
+```
+
+The default browser is Chrome. For running test on Firefox, you should pass proper property: 
+```
+mvn test -Punit -Drun.config.browser=firefox
 ```
 
