@@ -13,7 +13,7 @@ Java version 1.8, Chrome(version 60.0.3112.101 or greater), and Firefox(version 
 
 ## Running the tests
 
-On the command line, navigate to project root directory and run:(it compiles all testss and runs only smoke test which is here testing the log in functionality)
+On the command line, navigate to the project root directory and run:(it compiles all testss and runs only smoke test which is here testing the log in functionality)
 ```
 mvn clean install
 ```
@@ -28,3 +28,4 @@ The default browser is Chrome. For running test on Firefox, you should pass prop
 mvn test -Punit -Drun.config.browser=firefox
 ```
 
+Afterwards, log file can be found in the project root directory. 

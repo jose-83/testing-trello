@@ -9,7 +9,7 @@ import pages.BoardPage;
 import pages.BoardsPage;
 import pages.LoginPage;
 
-public class TestBoardCreation extends TrelloSeleniumTest {
+public class TestBoardCreation extends AbstractTrelloSeleniumTest {
 
     private static final String admin = Config.getAdminName();
     private static final String password = Config.getAdminPass();
