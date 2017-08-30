@@ -7,7 +7,7 @@ import pages.BoardsPage;
 import pages.LoggedOutPage;
 import pages.LoginPage;
 
-public class TestLoginSmoke extends TrelloSeleniumTest {
+public class TestLoginSmoke extends AbstractTrelloSeleniumTest {
 
     private static final String admin = Config.getAdminName();
     private static final String password = Config.getAdminPass();
