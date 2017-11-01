@@ -8,12 +8,15 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.stqa.selenium.factory.SingleWebDriverPool;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,7 +55,18 @@ public final class Driver {
         if ("firefox".equals(browser)) {
             return DesiredCapabilities.firefox();
         } else {
-            return DesiredCapabilities.chrome();
+            String osName = System.getProperty("os.name");
+            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            if (osName.contains("Mac") || osName.contains("Linux")) {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--kiosk");
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+            } else {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--start-maximized");
+                capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+            }
+            return capabilities;
         }
     }
 
