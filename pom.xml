@@ -116,7 +116,7 @@
                             <systemPropertyVariables>
                                 <webdriver.chrome.driver>${run.config.binaries.path}chromedriver231.exe
                                 </webdriver.chrome.driver>
-                                <webdriver.gecko.driver>${run.config.binaries.path}geckodriver0180.exe</webdriver.gecko.driver>
+                                <webdriver.gecko.driver>${run.config.binaries.path}geckodriver0191.exe</webdriver.gecko.driver>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -157,7 +157,7 @@
                             <systemPropertyVariables>
                                 <webdriver.chrome.driver>${run.config.binaries.path}chromedriver231
                                 </webdriver.chrome.driver>
-                                <webdriver.gecko.driver>${run.config.binaries.path}geckodriver0180</webdriver.gecko.driver>
+                                <webdriver.gecko.driver>${run.config.binaries.path}geckodriver0191</webdriver.gecko.driver>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>

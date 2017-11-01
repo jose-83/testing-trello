@@ -3,10 +3,12 @@ package utils.selenium;
 import config.Config;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.stqa.selenium.factory.SingleWebDriverPool;
@@ -31,11 +33,12 @@ public final class Driver {
     }
 
     public static Driver getWrappedDriver(String browser) {
+        Capabilities capabilities = getCapabilities(browser);
         if (wrappedDriver == null || webDriver == null) {
-            webDriver = SingleWebDriverPool.DEFAULT.getDriver(browser);
+            webDriver = SingleWebDriverPool.DEFAULT.getDriver(capabilities);
             wrappedDriver = new Driver(webDriver);
         } else if (!isAlertShown()) {
-            WebDriver newWebDriver = SingleWebDriverPool.DEFAULT.getDriver(browser);
+            WebDriver newWebDriver = SingleWebDriverPool.DEFAULT.getDriver(capabilities);
             if (newWebDriver != webDriver) {
                 webDriver = newWebDriver;
                 wrappedDriver = new Driver(webDriver);
@@ -43,6 +46,14 @@ public final class Driver {
         }
 
         return wrappedDriver;
+    }
+
+    public static Capabilities getCapabilities(String browser) {
+        if ("firefox".equals(browser)) {
+            return DesiredCapabilities.firefox();
+        } else {
+            return DesiredCapabilities.chrome();
+        }
     }
 
     public static Driver getWrappedDriver() {
